@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1 Repaso #{title}
+  h2 Voy a sacar 10
+  p La vida es corta
+  form(action="/api/post", method="post" name="postForm")
+    input(type="text") 
+    input(type="text") 
+    input(type="submit", value="Enviar")
+  table 
+    thead
+      th Nombre
+      th Autot
+    tbody.posts 
+  script(src="/javascripts/main.js")
