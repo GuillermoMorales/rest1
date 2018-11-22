@@ -36,7 +36,7 @@ PostController.getAll = function (req, res) {
             res.status(500);
             res.json({code:500, err});
         } else {
-            res.json(posts);
+            res.json({ ok:true , posts});
         }
     });
     // Enviarlos como respuesta en JSON
@@ -49,7 +49,7 @@ PostController.get = function (req, res) {
             res.status(500);
             res.json({code:500, err});
         } else {
-            res.json(post);
+            res.json({ok: true, post});
         }
     });
     // si se encontro darlo como JSON
@@ -58,14 +58,37 @@ PostController.get = function (req, res) {
 
 PostController.update = function (req, res) {
     //Obtener los datos actulizar
-    // Validar los datos
-    // Ejecutar una actulizacion en la base datos
+    let update = {
+        nombre: req.body.nombre,
+        autor: req.body.autor
+    };
+     // Validar los datos
+    
+    // Ejecutar una actualizacion en la base datos
+    postModel.findByIdAndUpdate(req.params.id, update, function(err, old){
+        if (err) {
+            res.status(500);
+            res.json({code:500, err});
+        } else {
+            res.json({ok: true, old, update});
+        }
+    });
+   
+    
     // Respoden si tuvo exito
     // o no 
 };
 
 PostController.delete = function (req, res) {
     // intentar eliminar
+    postModel.findByIdAndRemove(req.params.id, function(err, eleminado){
+        if (err) {
+            res.status(500);
+            res.json({code:500, err});
+        } else {
+            res.json({ok: true, eleminado});
+        }
+    });
     // noitifcar resultado 
 };
 
