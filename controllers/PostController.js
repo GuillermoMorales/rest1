@@ -14,12 +14,12 @@ PostController.create = function (req, res) {
         // Crear un objeto post
         let nuevoPost =  new postModel(data);
             // Guardar en la base datos
-        nuevoPost.save(function(err){
+        nuevoPost.save(function(err, guardado){
             if(err){
                 res.status(500);
                 res.json({code:500, err});
             } else {
-                res.json({ok: true, message: 'Se a guardado con exito', data});
+                res.json({ok: true, message: 'Se a guardado con exito', guardado});
             }
         });
     
