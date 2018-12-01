@@ -10,7 +10,7 @@ PostController.create = function (req, res) {
         autor: req.body.autor
     };
     // Validar valores
-    if (data.nombre && data.autor && data.nombre != '' && data.autor != ''){
+    if (data.nombre && data.autor  != ''){
         // Crear un objeto post
         let nuevoPost =  new postModel(data);
             // Guardar en la base datos
@@ -63,16 +63,22 @@ PostController.update = function (req, res) {
         autor: req.body.autor
     };
      // Validar los datos
-    
-    // Ejecutar una actualizacion en la base datos
-    postModel.findByIdAndUpdate(req.params.id, update, function(err, old){
-        if (err) {
-            res.status(500);
-            res.json({code:500, err});
-        } else {
-            res.json({ok: true, old, update});
-        }
-    });
+    if(update.nombre && update.autor !='')
+    {
+        // Ejecutar una actualizacion en la base datos
+        postModel.findByIdAndUpdate(req.params.id, update, function(err, old){
+            if (err) {
+                res.status(500);
+                res.json({code:500, err});
+            } else {
+                res.json({ok: true, old, update});
+            }
+        });
+    }else {
+        res.status(400);
+        res.json({err:{code: 400,  message: 'Faltan datos', data}});
+    }
+
    
     
     // Respoden si tuvo exito
